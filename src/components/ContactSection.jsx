@@ -153,7 +153,7 @@ export default function ContactSection() {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full h-screen bg-black overflow-hidden">
+    <div ref={containerRef} className="relative w-full h-[100svh] md:h-screen bg-black overflow-hidden">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full cursor-pointer"
@@ -161,14 +161,14 @@ export default function ContactSection() {
       />
       
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-        <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 drop-shadow-2xl">
+        <h1 className="text-4xl md:text-8xl font-bold text-white mb-4 md:mb-6 drop-shadow-2xl">
           Get In Touch
         </h1>
-        <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl drop-shadow-lg">
+        <p className="text-base md:text-2xl text-gray-300 mb-8 md:mb-12 max-w-md md:max-w-2xl drop-shadow-lg">
           Let's connect and build something extraordinary together
         </p>
         
-        <div className="flex flex-wrap justify-center gap-6 mb-8">
+        <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-6 md:mb-8">
           {contacts.map((contact, index) => {
             const Icon = contact.icon;
             return (
@@ -181,14 +181,14 @@ export default function ContactSection() {
                 className="group relative"
               >
                 <div 
-                  className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center backdrop-blur-md bg-white/10 border-2 border-white/20 transition-all duration-300 hover:scale-110 hover:bg-white/20 hover:border-white/40 shadow-2xl"
+                  className="w-14 h-14 md:w-20 md:h-20 rounded-full flex items-center justify-center backdrop-blur-md bg-white/10 border-2 border-white/20 transition-all duration-300 hover:scale-110 hover:bg-white/20 hover:border-white/40 shadow-2xl"
                   style={{ 
                     boxShadow: `0 0 30px ${contact.color}40`
                   }}
                 >
-                  <Icon className="w-8 h-8 md:w-10 md:h-10 text-white drop-shadow-lg" />
+                  <Icon className="w-7 h-7 md:w-10 md:h-10 text-white drop-shadow-lg" />
                 </div>
-                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                <span className="absolute -bottom-7 md:-bottom-8 left-1/2 -translate-x-1/2 text-white text-xs md:text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                   {contact.label}
                 </span>
               </a>
@@ -197,7 +197,7 @@ export default function ContactSection() {
         </div>
 
         {/* Copied notification */}
-        <div className={`fixed top-8 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-full shadow-2xl transition-all duration-300 ${showCopied ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
+        <div className={`fixed top-6 md:top-8 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 md:px-6 py-2.5 md:py-3 rounded-full shadow-2xl transition-all duration-300 ${showCopied ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
           <span className="font-semibold">✓ Copied to clipboard:</span> {copiedText}
         </div>
 

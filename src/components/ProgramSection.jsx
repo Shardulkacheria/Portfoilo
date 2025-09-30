@@ -208,7 +208,7 @@ export default function ProjectSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-screen overflow-hidden"
+      className="relative w-full min-h-[100svh] md:min-h-screen overflow-hidden"
     >
       {/* Parallax Background */}
       <div
@@ -224,7 +224,7 @@ export default function ProjectSection() {
       <div className="absolute inset-0 bg-black/45 pointer-events-none" />
 
       {/* Projects */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-24">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
         <h2
           ref={headingRef}
           className="text-4xl md:text-5xl font-extrabold text-white mb-8 text-center"
@@ -233,13 +233,13 @@ export default function ProjectSection() {
         </h2>
         <p
           ref={subheadingRef}
-          className="text-center text-gray-200 max-w-3xl mx-auto mb-12"
+          className="text-center text-gray-200 max-w-3xl mx-auto mb-10 md:mb-12 px-2"
         >
           Selected work showing the tools and features I built. Hover any card
           to view details and links.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {projects.map((p, idx) => (
             <article
               key={p.id}
@@ -255,7 +255,7 @@ export default function ProjectSection() {
                 }}
               >
                 {/* Image */}
-                <div className="h-44 md:h-48 w-full overflow-hidden">
+                <div className="h-40 sm:h-44 md:h-48 w-full overflow-hidden">
                   <img
                     src={p.thumbnail}
                     alt={`${p.title} thumbnail`}
@@ -264,9 +264,9 @@ export default function ProjectSection() {
                 </div>
 
                 {/* Card content */}
-                <div className="p-5">
-                  <h3 className="text-xl font-semibold text-white">{p.title}</h3>
-                  <p className="text-sm text-gray-300 mt-2 line-clamp-2">
+                <div className="p-4 md:p-5">
+                  <h3 className="text-lg md:text-xl font-semibold text-white">{p.title}</h3>
+                  <p className="text-xs md:text-sm text-gray-300 mt-2 line-clamp-2">
                     {p.short}
                   </p>
 
@@ -274,18 +274,18 @@ export default function ProjectSection() {
                     className="card-details mt-4 text-sm text-gray-200"
                     style={{ opacity: 0, transform: "translateY(10px)" }}
                   >
-                    <p className="mb-2">
+                    <p className="mb-2 text-xs md:text-sm">
                       <strong>Features:</strong> {p.features}
                     </p>
-                    <p className="mb-3">
+                    <p className="mb-3 text-xs md:text-sm">
                       <strong>Tech:</strong> {p.tech}
                     </p>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3">
                       <a
                         href={p.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block px-4 py-2 rounded-lg text-sm font-medium bg-white/8 hover:bg-white/12 border border-white/10"
+                        className="inline-block w-full sm:w-auto text-center px-4 py-2 rounded-lg text-sm font-medium bg-white/8 hover:bg-white/12 border border-white/10"
                       >
                         GitHub
                       </a>
@@ -293,7 +293,7 @@ export default function ProjectSection() {
                         href={p.live || "#"}
                         target={p.live ? "_blank" : "_self"}
                         rel="noopener noreferrer"
-                        className={`inline-block px-4 py-2 rounded-lg text-sm font-medium ${
+                        className={`inline-block w-full sm:w-auto text-center px-4 py-2 rounded-lg text-sm font-medium ${
                           p.live
                             ? "bg-white/8 hover:bg-white/12"
                             : "bg-white/6 cursor-not-allowed opacity-50"

@@ -34,20 +34,20 @@
       "bg-pink-500",
     ];
 
-    return (
-      <section ref={sectionRef} className="relative w-full h-screen overflow-hidden">
+  return (
+    <section ref={sectionRef} className="relative w-full min-h-[100svh] md:h-screen overflow-hidden">
         {/* Horizontal scroll container */}
         <div ref={containerRef} className="flex w-[500vw] h-full">
           {["I.svg", "CREATE.svg", "CODE.svg", "AND.svg", "DEPLOY.svg"].map(
             (svg, i) => (
               <div
                 key={i}
-                className={`about-slide flex items-center justify-center w-screen h-full ${bgColors[i]} transition-colors duration-500`}
+                className={`about-slide flex items-center justify-center w-screen h-full ${bgColors[i]} transition-colors duration-500 px-4`}
               >
                 <img
                   src={`/assets/${svg}`}
                   alt={svg.replace(".svg", "")}
-                  className="max-h-[60%] object-contain drop-shadow-lg"
+                  className="max-h-[60%] max-w-[90%] object-contain drop-shadow-lg"
                 />
               </div>
             )

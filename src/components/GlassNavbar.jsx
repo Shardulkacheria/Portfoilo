@@ -12,7 +12,7 @@ export default function GlassNavbar() {
   const logoRef = useRef(null);
   const hamburgerRef = useRef(null);
 
-  const navItems = ["Home", "About", "Portfolio", "Services", "Contact"];
+  const navItems = ["Home", "About", "Projects", "Timeline", "Skills", "Contact"]; 
 
   // Animate underline on active change
   useEffect(() => {
@@ -49,10 +49,58 @@ export default function GlassNavbar() {
     }
   }, []);
 
+  // Observe sections to sync active state while scrolling
+  useEffect(() => {
+    const idByItem = {
+      Home: 'home',
+      About: 'about',
+      Projects: 'projects',
+      Timeline: 'timeline',
+      Skills: 'skills',
+      Contact: 'contact',
+    };
+
+    const sections = Object.entries(idByItem)
+      .map(([item, id]) => ({ item, el: typeof document !== 'undefined' ? document.getElementById(id) : null }))
+      .filter(({ el }) => !!el);
+
+    if (!sections.length) return;
+
+    let ticking = false;
+    const handleIntersect = (entries) => {
+      // Choose the entry with highest intersection ratio
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          const match = sections.find(s => s.el === visible.target);
+          if (match && match.item !== active) {
+            setActive(match.item);
+          }
+          ticking = false;
+        });
+      }
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, {
+      root: null,
+      // A bit more than half of the viewport to avoid flicker on small screens
+      threshold: [0.55, 0.75],
+    });
+
+    sections.forEach(({ el }) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [active]);
+
   return (
-    <header className="fixed top-5 left-0 right-0 z-50 flex justify-between items-center px-6 py-3 md:mx-10">
+    <header className="fixed top-5 left-0 right-0 z-50 flex justify-between items-center px-4 md:px-6 py-3 md:mx-10">
       {/* SHARDUL Logo */}
-      <div ref={logoRef} className="text-white font-bold text-2xl cursor-default">
+      <div ref={logoRef} className="text-white font-bold text-xl md:text-2xl cursor-default">
         SHARDUL
       </div>
 
@@ -62,7 +110,7 @@ export default function GlassNavbar() {
         {navItems.map((item) => (
           <Link
             key={item}
-            href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+            href={item === "Home" ? "#home" : `#${item.toLowerCase()}`}
             className="text-lg text-white hover:text-red-500 transition-colors duration-300 relative"
             ref={(el) => (navRefs.current[item] = el)}
             onClick={() => setActive(item)}
@@ -90,13 +138,13 @@ export default function GlassNavbar() {
 
       {/* Mobile Dropdown */}
       {isOpen && (
-        <div className="absolute top-full mt-3 right-0 w-48 bg-gray-900/90 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg md:hidden">
-          <nav className="flex flex-col items-center py-4 space-y-4">
+        <div className="absolute top-full mt-3 right-4 w-56 bg-gray-900/90 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg md:hidden">
+          <nav className="flex flex-col items-stretch py-4 space-y-1">
             {navItems.map((item) => (
               <Link
                 key={item}
-                href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                className={`text-lg transition-colors duration-300 ${
+                href={item === "Home" ? "#home" : `#${item.toLowerCase()}`}
+                className={`px-4 py-2 text-base transition-colors duration-300 ${
                   active === item
                     ? "text-red-500"
                     : "text-white hover:text-red-500"

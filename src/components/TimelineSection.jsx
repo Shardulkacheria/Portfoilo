@@ -161,12 +161,17 @@ export default function TimelineSection() {
         // Position relative to the sticky container
         const elRect = el.getBoundingClientRect();
         
-        // Alternate left and right based on path position
+        // Alternate left and right; on small screens, keep a smaller horizontal offset
         const isLeft = i % 2 === 0;
-        const offsetX = isLeft ? -(elRect.width + 80) : 80;
+        const baseOffset = window.innerWidth < 640 ? 16 : 80;
+        const offsetX = isLeft ? -(elRect.width + baseOffset) : baseOffset;
         
         let leftPos = screenX - stickyRect.left + offsetX;
         let topPos = screenY - stickyRect.top - elRect.height / 2;
+
+        // Clamp within sticky container horizontally with padding
+        const pad = window.innerWidth < 640 ? 8 : 16;
+        leftPos = Math.max(pad, Math.min(leftPos, stickyRect.width - elRect.width - pad));
 
         // Apply positioning
         el.style.position = "absolute";
@@ -217,11 +222,11 @@ export default function TimelineSection() {
       </div>
 
       {/* Header - Shows first, not sticky */}
-      <div className="relative z-10 text-center py-32">
-        <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+      <div className="relative z-10 text-center py-20 md:py-32 px-4">
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4 md:mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
           My Journey
         </h2>
-        <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto px-6">
+        <p className="text-gray-400 text-base md:text-xl max-w-2xl mx-auto px-2 md:px-6">
           Follow the path to explore my educational milestones
         </p>
         
@@ -234,14 +239,14 @@ export default function TimelineSection() {
       </div>
 
       {/* Timeline Container - This is where scroll animation happens */}
-      <div ref={containerRef} className="relative min-h-[300vh]">
+      <div ref={containerRef} className="relative min-h-[260vh] md:min-h-[300vh]">
         {/* SVG Path - Sticky and centered */}
-        <div className="sticky top-0 h-screen flex items-center justify-center pointer-events-none">
+        <div className="sticky top-0 h-[100svh] md:h-screen flex items-center justify-center pointer-events-none">
           <svg
             ref={svgRef}
             viewBox="0 0 400 1200"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-full max-w-lg h-[90vh]"
+            className="w-full max-w-sm sm:max-w-md md:max-w-lg h-[80vh] md:h-[90vh]"
             preserveAspectRatio="xMidYMid meet"
           >
             <defs>
@@ -333,12 +338,12 @@ export default function TimelineSection() {
                 ref={(el) => (milestoneEls.current[i] = el)}
                 className="pointer-events-auto opacity-0 absolute"
               >
-                <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl p-6 shadow-2xl w-72 md:w-80 border border-cyan-500/30 hover:border-cyan-400/50 transition-all duration-300 hover:scale-105 hover:shadow-cyan-500/20">
+                <div className="relative bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl p-5 md:p-6 shadow-2xl w-64 sm:w-72 md:w-80 border border-cyan-500/30 hover:border-cyan-400/50 transition-all duration-300 hover:scale-105 hover:shadow-cyan-500/20">
                   {/* Glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-blue-500/0 hover:from-cyan-500/5 hover:to-blue-500/5 rounded-2xl transition-all duration-300"></div>
                   
                   {/* Icon badge */}
-                  <div className="absolute -top-4 -right-4 w-14 h-14 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-3xl shadow-lg shadow-cyan-500/50">
+                  <div className="absolute -top-4 -right-4 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-2xl md:text-3xl shadow-lg shadow-cyan-500/50">
                     {m.icon}
                   </div>
                   
@@ -348,7 +353,7 @@ export default function TimelineSection() {
                       <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
                       {m.year}
                     </div>
-                    <h3 className="text-xl md:text-2xl font-bold mb-2 text-white">{m.title}</h3>
+                    <h3 className="text-lg md:text-2xl font-bold mb-2 text-white">{m.title}</h3>
                     <p className="text-sm md:text-base text-gray-300 leading-relaxed">{m.school}</p>
                   </div>
                   
@@ -362,7 +367,7 @@ export default function TimelineSection() {
       </div>
 
       {/* Bottom spacer */}
-      <div className="relative z-10 py-20"></div>
+      <div className="relative z-10 py-12 md:py-20"></div>
     </section>
   );
 }
