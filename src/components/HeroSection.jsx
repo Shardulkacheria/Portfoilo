@@ -31,7 +31,7 @@ const HeroSection = () => {
   return (
     <div
       className="relative w-full min-h-screen flex flex-col items-center justify-end bg-center bg-cover bg-no-repeat bg-gray-900 pb-28"
-      style={{ backgroundImage: `url('/assets/hero-bg.jpg')` }}
+      style={{ backgroundImage: `url('/assets/ssk.svg')` }}
     >
       {/* Black overlay */}
       <div className="absolute inset-0 bg-black/50"></div>
